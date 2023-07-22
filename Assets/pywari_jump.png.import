@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dobuhiednumf7"
-path="res://.godot/imported/pywari_run.png-4db5d0843e3c9df5986252bd4bc0cd88.ctex"
+uid="uid://ctgl36i08wpk0"
+path="res://.godot/imported/pywari_jump.png-607d0a1c220344966175fabb2ab41bb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/pywari_run.png"
-dest_files=["res://.godot/imported/pywari_run.png-4db5d0843e3c9df5986252bd4bc0cd88.ctex"]
+source_file="res://Assets/pywari_jump.png"
+dest_files=["res://.godot/imported/pywari_jump.png-607d0a1c220344966175fabb2ab41bb7.ctex"]
 
 [params]
 

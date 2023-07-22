@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dobuhiednumf7"
-path="res://.godot/imported/pywari_run.png-4db5d0843e3c9df5986252bd4bc0cd88.ctex"
+uid="uid://b86t6pk58lw2s"
+path="res://.godot/imported/pywari_fall.png-882e37a7e77df422f66f1a3eff11ca74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/pywari_run.png"
-dest_files=["res://.godot/imported/pywari_run.png-4db5d0843e3c9df5986252bd4bc0cd88.ctex"]
+source_file="res://Assets/pywari_fall.png"
+dest_files=["res://.godot/imported/pywari_fall.png-882e37a7e77df422f66f1a3eff11ca74.ctex"]
 
 [params]
 
