@@ -136,13 +136,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g01y"]
 size = Vector2(32, 148)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4c631"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgm84"]
 atlas = ExtResource("7_in0yh")
-region = Rect2(0, 0, 90, 120)
+region = Rect2(0, 0, 100, 120)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0ykkq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_qktob"]
 atlas = ExtResource("7_in0yh")
-region = Rect2(90, 0, 90, 120)
+region = Rect2(100, 0, 100, 120)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k3en1"]
 animations = [{
@@ -154,10 +154,10 @@ animations = [{
 "texture": null
 }, {
 "duration": 2.0,
-"texture": SubResource("AtlasTexture_4c631")
+"texture": SubResource("AtlasTexture_sgm84")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0ykkq")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_qktob")
 }, {
 "duration": 1.0,
 "texture": null
