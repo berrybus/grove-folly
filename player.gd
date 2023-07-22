@@ -27,13 +27,10 @@ func _physics_process(delta):
 
 	var direction = Input.get_axis("ui_left", "ui_right")
 
-	if not attacking:
-		if direction:
-			velocity.x = direction * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-	elif is_on_floor():
-		velocity.x = 0
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 	if not is_on_floor():
 		if djump and Input.is_action_just_pressed("jump"):
@@ -70,6 +67,7 @@ func animate(direction):
 		animated_sprite_2d.play("attack")
 		attacking = true
 		sword_smear.play("attack")
+		sword_smear.frame = 0
 		sword_smear.flip_h = animated_sprite_2d.flip_h
 		if animated_sprite_2d.flip_h:
 			sword_smear.offset.x = 155

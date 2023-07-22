@@ -74,7 +74,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -153,7 +153,7 @@ animations = [{
 "duration": 1.0,
 "texture": null
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_4c631")
 }, {
 "duration": 1.0,
@@ -164,7 +164,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 16.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -190,7 +190,5 @@ z_index = -1
 position = Vector2(-76, -12)
 sprite_frames = SubResource("SpriteFrames_k3en1")
 animation = &"attack"
-frame = 2
-frame_progress = 0.367527
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
