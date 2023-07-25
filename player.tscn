@@ -1,12 +1,17 @@
-[gd_scene load_steps=26 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=31 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
-[ext_resource type="Texture2D" uid="uid://b86t6pk58lw2s" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
+[ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
 [ext_resource type="Texture2D" uid="uid://kn8l021g0g8u" path="res://Assets/pywari_attack.png" id="2_on1r0"]
 [ext_resource type="Texture2D" uid="uid://dw8sti0fnn3dy" path="res://Assets/pywari_idle.png" id="2_u5dbf"]
 [ext_resource type="Texture2D" uid="uid://dobuhiednumf7" path="res://Assets/pywari_run.png" id="3_3qpvq"]
 [ext_resource type="Texture2D" uid="uid://ctgl36i08wpk0" path="res://Assets/pywari_jump.png" id="3_7ax88"]
 [ext_resource type="Texture2D" uid="uid://dxt8lf7pkjv7a" path="res://Assets/sword_smear.png" id="7_in0yh"]
+[ext_resource type="Script" path="res://state_machine.gd" id="7_kqvgd"]
+[ext_resource type="Script" path="res://player_idle.gd" id="8_7xefq"]
+[ext_resource type="Script" path="res://player_run.gd" id="10_sjkx6"]
+[ext_resource type="Script" path="res://player_air.gd" id="11_urbjs"]
+[ext_resource type="Script" path="res://player_attack.gd" id="12_lregl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj7vp"]
 atlas = ExtResource("2_on1r0")
@@ -66,7 +71,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fj7vp")
 }, {
-"duration": 1.0,
+"duration": 2.0,
 "texture": SubResource("AtlasTexture_ky21y")
 }, {
 "duration": 2.0,
@@ -147,16 +152,13 @@ region = Rect2(100, 0, 100, 120)
 [sub_resource type="SpriteFrames" id="SpriteFrames_k3en1"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
+"duration": 3.0,
 "texture": null
 }, {
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_sgm84")
 }, {
-"duration": 2.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qktob")
 }, {
 "duration": 1.0,
@@ -170,14 +172,15 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(528, 456)
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 9.0
 script = ExtResource("1_d7r6m")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="BodyAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_adey2")
 animation = &"attack"
 autoplay = "idle"
-frame = 2
-frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -191,4 +194,21 @@ position = Vector2(-76, -12)
 sprite_frames = SubResource("SpriteFrames_k3en1")
 animation = &"attack"
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("7_kqvgd")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("8_7xefq")
+
+[node name="Run" type="Node" parent="StateMachine"]
+script = ExtResource("10_sjkx6")
+
+[node name="Air" type="Node" parent="StateMachine"]
+script = ExtResource("11_urbjs")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("12_lregl")
+
+[connection signal="animation_finished" from="BodyAnimation" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="BodyAnimation" to="StateMachine/Attack" method="_on_body_animation_animation_finished"]
