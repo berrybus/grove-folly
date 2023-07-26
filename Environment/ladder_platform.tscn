@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq56b0mnhq4iq"]
+
+[ext_resource type="Texture2D" uid="uid://d0kehnnexcljw" path="res://Assets/symbolic_tiles.png" id="1_5w3u8"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kw7cp"]
+texture = ExtResource("1_5w3u8")
+texture_region_size = Vector2i(70, 70)
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-35, -35, 35, -35, 35, 35, -35, 35)
+
+[sub_resource type="TileSet" id="TileSet_vuogb"]
+tile_size = Vector2i(70, 70)
+physics_layer_0/collision_layer = 4
+sources/0 = SubResource("TileSetAtlasSource_kw7cp")
+
+[node name="LadderPlatform" type="TileMap"]
+tile_set = SubResource("TileSet_vuogb")
+format = 2

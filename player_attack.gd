@@ -1,12 +1,13 @@
+class_name PlayerAttack
 extends PlayerState
 
-func enter(msg := {}) -> void:
+func enter(_msg := {}) -> void:
 	player.body_animation.play("attack")
 	player.sword_smear.play("attack")
 	player.sword_smear.frame = 0
 	player.sword_smear.flip_h = player.body_animation.flip_h
 	if player.body_animation.flip_h:
-		player.sword_smear.offset.x = 155
+		player.sword_smear.offset.x = 148
 	else:
 		player.sword_smear.offset.x = 0
 	
@@ -21,9 +22,7 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 
 
-func _on_body_animation_animation_finished():
-	if player.body_animation.animation != "attack":
-		return
+func attack_anim_finished():
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if player.is_on_floor():
 		if direction:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=32 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
 [ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
@@ -6,14 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://dw8sti0fnn3dy" path="res://Assets/pywari_idle.png" id="2_u5dbf"]
 [ext_resource type="Texture2D" uid="uid://dobuhiednumf7" path="res://Assets/pywari_run.png" id="3_3qpvq"]
 [ext_resource type="Texture2D" uid="uid://ctgl36i08wpk0" path="res://Assets/pywari_jump.png" id="3_7ax88"]
-[ext_resource type="Texture2D" uid="uid://b585s636able7" path="res://Assets/pywari_climb.png" id="3_jt7ik"]
 [ext_resource type="Texture2D" uid="uid://dxt8lf7pkjv7a" path="res://Assets/sword_smear.png" id="7_in0yh"]
 [ext_resource type="Script" path="res://state_machine.gd" id="7_kqvgd"]
 [ext_resource type="Script" path="res://player_idle.gd" id="8_7xefq"]
 [ext_resource type="Script" path="res://player_run.gd" id="10_sjkx6"]
 [ext_resource type="Script" path="res://player_air.gd" id="11_urbjs"]
 [ext_resource type="Script" path="res://player_attack.gd" id="12_lregl"]
-[ext_resource type="Script" path="res://player_climb.gd" id="14_x5521"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj7vp"]
 atlas = ExtResource("2_on1r0")
@@ -85,14 +83,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_jt7ik")
-}],
-"loop": true,
-"name": &"climb",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("2_cm8kf")
 }],
 "loop": true,
@@ -152,7 +142,7 @@ animations = [{
 size = Vector2(32, 148)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cohwn"]
-size = Vector2(32, 148)
+size = Vector2(40, 156)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sgm84"]
 atlas = ExtResource("7_in0yh")
@@ -185,7 +175,6 @@ animations = [{
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(528, 456)
-collision_mask = 6
 floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 9.0
@@ -193,7 +182,7 @@ script = ExtResource("1_d7r6m")
 
 [node name="BodyAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_adey2")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -202,10 +191,9 @@ autoplay = "idle"
 position = Vector2(-4, 10)
 shape = SubResource("RectangleShape2D_2g01y")
 
-[node name="LadderDetector" type="Area2D" parent="."]
-collision_mask = 14
+[node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-4, 10)
 shape = SubResource("RectangleShape2D_cohwn")
 
@@ -231,10 +219,7 @@ script = ExtResource("11_urbjs")
 [node name="Attack" type="Node" parent="StateMachine"]
 script = ExtResource("12_lregl")
 
-[node name="Climb" type="Node" parent="StateMachine"]
-script = ExtResource("14_x5521")
-
-[connection signal="animation_finished" from="BodyAnimation" to="." method="_on_body_animation_animation_finished"]
-[connection signal="body_entered" from="LadderDetector" to="." method="_on_ladder_detector_body_entered"]
-[connection signal="body_exited" from="LadderDetector" to="." method="_on_ladder_detector_body_exited"]
-[connection signal="body_shape_entered" from="LadderDetector" to="." method="_on_ladder_detector_body_shape_entered"]
+[connection signal="animation_finished" from="BodyAnimation" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="BodyAnimation" to="StateMachine/Attack" method="_on_body_animation_animation_finished"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

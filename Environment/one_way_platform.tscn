@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://3dlb8elfe0go"]
+
+[ext_resource type="Texture2D" uid="uid://d0kehnnexcljw" path="res://Assets/symbolic_tiles.png" id="1_m4ljx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_p2tuk"]
+texture = ExtResource("1_m4ljx")
+texture_region_size = Vector2i(70, 70)
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-35, -35, 35, -35, 35, 35, -35, 35)
+0:1/0/physics_layer_0/polygon_0/one_way = true
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(35, -35, 35, 35, -35, 35)
+1:1/0/physics_layer_0/polygon_0/one_way = true
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-35, -35, 35, 35, -35, 35)
+2:1/0/physics_layer_0/polygon_0/one_way = true
+
+[sub_resource type="TileSet" id="TileSet_y7l65"]
+tile_size = Vector2i(70, 70)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_p2tuk")
+
+[node name="OneWayPlatform" type="TileMap"]
+tile_set = SubResource("TileSet_y7l65")
+format = 2
