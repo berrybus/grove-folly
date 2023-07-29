@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=38 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
 [ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
@@ -174,7 +174,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g01y"]
-size = Vector2(36, 148)
+size = Vector2(32, 148)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sgm84"]
 atlas = ExtResource("7_in0yh")
@@ -207,9 +207,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cohwn"]
 size = Vector2(18, 148)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jgjd"]
-size = Vector2(78, 148)
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(528, 456)
@@ -221,8 +218,9 @@ script = ExtResource("1_d7r6m")
 
 [node name="BodyAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_adey2")
-animation = &"idle"
+animation = &"climb"
 autoplay = "idle"
+frame_progress = 0.222439
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_callback = 0
@@ -250,13 +248,6 @@ shape = SubResource("RectangleShape2D_cohwn")
 wait_time = 0.25
 one_shot = true
 
-[node name="ObjectDetector" type="Area2D" parent="."]
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectDetector"]
-position = Vector2(-2, 10)
-shape = SubResource("RectangleShape2D_7jgjd")
-
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("7_kqvgd")
 initial_state = NodePath("Idle")
@@ -282,5 +273,3 @@ script = ExtResource("14_x5521")
 [connection signal="body_shape_entered" from="LadderDetector" to="." method="_on_ladder_detector_body_shape_entered"]
 [connection signal="body_shape_exited" from="LadderDetector" to="." method="_on_ladder_detector_body_shape_exited"]
 [connection signal="timeout" from="LadderDetector/LadderTimer" to="." method="_on_ladder_timer_timeout"]
-[connection signal="area_entered" from="ObjectDetector" to="." method="_on_object_detector_area_entered"]
-[connection signal="area_exited" from="ObjectDetector" to="." method="_on_object_detector_area_exited"]

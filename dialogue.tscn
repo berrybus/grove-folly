@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://bah7u1l2qws6b"]
+
+[ext_resource type="Script" path="res://dialogue.gd" id="1_gohnn"]
+
+[sub_resource type="Theme" id="Theme_gogt0"]
+default_font_size = 48
+
+[sub_resource type="Theme" id="Theme_tw6ke"]
+default_font_size = 32
+
+[node name="Dialogue" type="CanvasLayer"]
+script = ExtResource("1_gohnn")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = -1
+anchor_left = 0.00416667
+anchor_top = 0.718518
+anchor_right = 0.995833
+anchor_bottom = 0.992593
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0168067
+anchor_top = 0.0777027
+anchor_right = 0.983193
+anchor_bottom = 0.935811
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="NameText" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_gogt0")
+text = "Name"
+fit_content = true
+
+[node name="MessageText" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_tw6ke")
+text = "Message text"
+fit_content = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

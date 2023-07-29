@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=34 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
 [ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dw8sti0fnn3dy" path="res://Assets/pywari_idle.png" id="2_u5dbf"]
 [ext_resource type="Texture2D" uid="uid://dobuhiednumf7" path="res://Assets/pywari_run.png" id="3_3qpvq"]
 [ext_resource type="Texture2D" uid="uid://ctgl36i08wpk0" path="res://Assets/pywari_jump.png" id="3_7ax88"]
-[ext_resource type="Texture2D" uid="uid://tnuv8v4nmrm7" path="res://Assets/pywari_climb.png" id="3_jt7ik"]
+[ext_resource type="Texture2D" uid="uid://b585s636able7" path="res://Assets/pywari_climb.png" id="3_jt7ik"]
 [ext_resource type="Texture2D" uid="uid://dxt8lf7pkjv7a" path="res://Assets/sword_smear.png" id="7_in0yh"]
 [ext_resource type="Script" path="res://state_machine.gd" id="7_kqvgd"]
 [ext_resource type="Script" path="res://player_idle.gd" id="8_7xefq"]
@@ -26,22 +26,6 @@ region = Rect2(112, 0, 112, 174)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mycs7"]
 atlas = ExtResource("2_on1r0")
 region = Rect2(224, 0, 112, 174)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7p4hc"]
-atlas = ExtResource("3_jt7ik")
-region = Rect2(0, 0, 99, 177)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l4cin"]
-atlas = ExtResource("3_jt7ik")
-region = Rect2(99, 0, 99, 177)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oy0ya"]
-atlas = ExtResource("3_jt7ik")
-region = Rect2(198, 0, 99, 177)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dmrfd"]
-atlas = ExtResource("3_jt7ik")
-region = Rect2(297, 0, 99, 177)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_723bw"]
 atlas = ExtResource("2_u5dbf")
@@ -101,20 +85,11 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7p4hc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l4cin")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oy0ya")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dmrfd")
+"texture": ExtResource("3_jt7ik")
 }],
 "loop": true,
 "name": &"climb",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -174,7 +149,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g01y"]
-size = Vector2(36, 148)
+size = Vector2(32, 148)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cohwn"]
+size = Vector2(32, 148)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sgm84"]
 atlas = ExtResource("7_in0yh")
@@ -204,12 +182,6 @@ animations = [{
 "speed": 16.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cohwn"]
-size = Vector2(18, 148)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jgjd"]
-size = Vector2(78, 148)
-
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(528, 456)
@@ -225,37 +197,23 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 12.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 10)
 shape = SubResource("RectangleShape2D_2g01y")
+
+[node name="LadderDetector" type="Area2D" parent="."]
+collision_mask = 14
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
+position = Vector2(-4, 10)
+shape = SubResource("RectangleShape2D_cohwn")
 
 [node name="SwordSmear" type="AnimatedSprite2D" parent="."]
 z_index = -1
 position = Vector2(-76, -12)
 sprite_frames = SubResource("SpriteFrames_k3en1")
 animation = &"attack"
-
-[node name="LadderDetector" type="Area2D" parent="."]
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderDetector"]
-position = Vector2(-4, 10)
-shape = SubResource("RectangleShape2D_cohwn")
-
-[node name="LadderTimer" type="Timer" parent="LadderDetector"]
-wait_time = 0.25
-one_shot = true
-
-[node name="ObjectDetector" type="Area2D" parent="."]
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectDetector"]
-position = Vector2(-2, 10)
-shape = SubResource("RectangleShape2D_7jgjd")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("7_kqvgd")
@@ -281,6 +239,3 @@ script = ExtResource("14_x5521")
 [connection signal="body_exited" from="LadderDetector" to="." method="_on_ladder_detector_body_exited"]
 [connection signal="body_shape_entered" from="LadderDetector" to="." method="_on_ladder_detector_body_shape_entered"]
 [connection signal="body_shape_exited" from="LadderDetector" to="." method="_on_ladder_detector_body_shape_exited"]
-[connection signal="timeout" from="LadderDetector/LadderTimer" to="." method="_on_ladder_timer_timeout"]
-[connection signal="area_entered" from="ObjectDetector" to="." method="_on_object_detector_area_entered"]
-[connection signal="area_exited" from="ObjectDetector" to="." method="_on_object_detector_area_exited"]

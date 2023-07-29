@@ -9,18 +9,17 @@ func enter(msg := {}) -> void:
 
 func physics_update(delta: float) -> void:
 	handle_animation()
-	
-	# Horizontal movement.
+
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
 		player.velocity.x = direction * player.SPEED
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+		player.velocity.x = move_toward(player.velocity.x, 0, player.AIR_FRICTION * delta)
 	
 	player.velocity.y += player.gravity * delta
 	player.move_and_slide()
 	
-	if Input.is_action_just_pressed("jump") and player.num_jumps < player.MAX_JUMPS:
+	if Input.is_action_just_pressed("jump") and player.num_jumps < player.MAX_JUMPS and player.MAX_JUMPS > 1:
 		player.velocity.y = player.JUMP_VELOCITY
 		player.num_jumps += 1
 	
@@ -32,6 +31,11 @@ func physics_update(delta: float) -> void:
 			state_machine.transition_to("Run")
 		else:
 			state_machine.transition_to("Idle")
+		return
+		
+	if player.can_climb() and Input.is_action_pressed("ui_up"):
+		state_machine.transition_to("Climb")
+		return
 
 func handle_animation() -> void:
 	if player.velocity.y >= 0:

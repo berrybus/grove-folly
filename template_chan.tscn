@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6bnfn1cv1kb4"]
+
+[ext_resource type="Script" path="res://interact_object.gd" id="1_cd7ha"]
+[ext_resource type="Texture2D" uid="uid://dg0m6o8y5kxyy" path="res://Assets/npc.png" id="1_q1bgp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5qkm"]
+size = Vector2(120, 168)
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_cd7ha")
+
+[node name="TemplateChan" type="Sprite2D" parent="."]
+texture = ExtResource("1_q1bgp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w5qkm")
