@@ -1,59 +1,103 @@
 extends CanvasLayer
 
-@onready var panel = $Panel
-@onready var name_text: RichTextLabel = $Panel/VBoxContainer/NameText
-@onready var message_text: RichTextLabel = $Panel/VBoxContainer/MessageText
+@onready var main_panel = %MainPanel
+@onready var name_text = %NameText
+@onready var message_text = %MessageText
+@onready var choice_0 = %Choice0
+@onready var choice_1 = %Choice1
+@onready var choice_2 = %Choice2
+
 @onready var timer = $Timer
-signal next_line
+@onready var avatar = $Avatar
 
-var dataProvider: InteractObject
+@onready var choices = [choice_0, choice_1, choice_2]
 
-var lines = [
-	"Call me Ishmael.",
-	"Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-	"It is a way I have of driving off the spleen and regulating the circulation.",
-	"Whenever I find myself growing grim about the mouth;",
-	"whenever it is a damp, drizzly November in my soul;",
-	"whenever I find myself involuntarily pausing before coffin warehouses, and bringing up the rear of every funeral I meet;",
-	"and especially whenever my hypos get such an upper hand of me, that it requires a strong moral principle to prevent me from deliberately stepping into the street, and methodically knocking people’s hats off—",
-	"then, I account it high time tozz get to sea as soon as I can."
-	]
-
-var names = []
-var lineIdx = 0
-var charIdx = 0
+var data_provider: InteractObject
+var avatarMap
+var next_choices
 
 func _ready():
-	panel.visible = false
+	main_panel.visible = false
+	avatar.visible = false
 	Events.show_dialogue.connect(on_show_dialogue)
-	for i in range(len(lines)):
-		names.append("Template-Chan")
+	for choice in choices:
+		choice.hide()
 
 func _process(delta):
-	if Input.is_action_just_pressed("ui_enter"):
+	if data_provider == null:
+		return
+	if InputScheme.is_action_just_pressed("confirm"):
 		if message_text.visible_ratio == 1.0:
-			lineIdx += 1
-			show_line()
-		else:
+			if not next_choices and not is_choosing():
+				data_provider.update_line_data(-1)
+				next_line()
+		elif message_text.visible_ratio < 1.0:
 			message_text.visible_characters = -1
 	
 func on_show_dialogue(provider):
-	panel.visible = true
-	dataProvider = provider
-	show_line()
+	if data_provider:
+		return
+	InputScheme.use_ui()
+	main_panel.visible = true
+	avatar.visible = true
+	data_provider = provider
 	timer.start()
+	next_line()
 
-func show_line():
-	if lineIdx >= lines.size():
+func next_line():
+	var line_data = data_provider.get_line_data()
+	if not line_data:
 		end_dialogue()
-	name_text.text = names[lineIdx]
-	message_text.text = lines[lineIdx]
+		return
+	var avatarTexture = load("res://Avatars/" + line_data["avatar"] + ".png")
+	name_text.text = line_data["name"]
+	message_text.text = line_data["message"]
 	message_text.visible_characters = 0
+	avatar.texture = avatarTexture
+	
+	if line_data.has("choices"):
+		var message_choices = line_data["choices"]
+		next_choices = message_choices
 
 func end_dialogue():
-	dataProvider = null
-	panel.visible = false
+	main_panel.visible = false
+	avatar.visible = false
+	timer.stop()
+	# Somewhat hacky way to prevent a dialogue box from immediately opening again
+	await get_tree().create_timer(0.05).timeout
+	data_provider = null
+	InputScheme.use_world()
+	
+func is_choosing():
+	for choice in choices:
+		if choice.visible == true:
+			return true
+	return false
+
 func _on_timer_timeout():
 	if message_text.visible_ratio < 1.0:
 		message_text.visible_characters += 1
-		print(message_text.visible_characters)
+	elif next_choices:
+		for idx in next_choices.size():
+			if idx < choices.size():
+				var button: Button = choices[idx]
+				button.show()
+				button.text = next_choices[idx]
+			choice_0.grab_focus()
+		next_choices = null
+		await get_tree().create_timer(0.05).timeout
+
+func _on_choice_0_pressed():
+	choose(0)
+
+func _on_choice_1_pressed():
+	choose(1)
+
+func _on_choice_2_pressed():
+	choose(1)
+
+func choose(idx):
+	data_provider.update_line_data(idx)
+	for choice in choices:
+		choice.hide()
+	next_line()

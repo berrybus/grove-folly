@@ -53,14 +53,13 @@ func _physics_process(_delta):
 	else:
 		ladder_map_below = null
 	
-	if Input.is_action_just_pressed("interact") and len(touching_objects) > 0:
-		print("interaction")
+	if InputScheme.is_action_just_pressed("interact") and len(touching_objects) > 0:
 		touching_objects.front().show_dialogue()
 	
 func apply_flip():
 	if state_machine.state is PlayerClimb:
 		return
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = InputScheme.get_axis("left", "right")
 	if direction > 0:
 		body_animation.flip_h = true
 		body_animation.offset.x = h_flip_offset
@@ -114,12 +113,10 @@ func _on_ladder_timer_timeout():
 	can_enter_ladder = true
 
 func _on_object_detector_area_entered(area):
-	print("enter")
 	if area is InteractObject:
 		touching_objects.append(area)
 
 
 func _on_object_detector_area_exited(area):
-	print("exit")
 	if area is InteractObject:
 		touching_objects.erase(area)

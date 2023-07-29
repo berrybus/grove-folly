@@ -15,7 +15,7 @@ func physics_update(delta: float) -> void:
 	if player.is_on_floor():
 		player.velocity.x = move_toward(player.velocity.x, 0, player.ATTACK_FRICTION * delta)
 	else:
-		var direction = Input.get_axis("ui_left", "ui_right")
+		var direction = InputScheme.get_axis("left", "right")
 		if direction:
 			player.velocity.x = direction * player.SPEED
 		else:
@@ -25,7 +25,7 @@ func physics_update(delta: float) -> void:
 
 
 func attack_anim_finished():
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = InputScheme.get_axis("left", "right")
 	if player.is_on_floor():
 		if direction:
 			state_machine.transition_to("Run")

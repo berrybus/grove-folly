@@ -1,9 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bah7u1l2qws6b"]
+[gd_scene load_steps=3 format=3 uid="uid://b7hvtcw2qbfgr"]
 
 [ext_resource type="Script" path="res://dialogue.gd" id="1_gohnn"]
-
-[sub_resource type="Theme" id="Theme_gogt0"]
-default_font_size = 48
 
 [sub_resource type="Theme" id="Theme_tw6ke"]
 default_font_size = 32
@@ -11,40 +8,106 @@ default_font_size = 32
 [node name="Dialogue" type="CanvasLayer"]
 script = ExtResource("1_gohnn")
 
-[node name="Panel" type="Panel" parent="."]
-anchors_preset = -1
-anchor_left = 0.00416667
-anchor_top = 0.718518
-anchor_right = 0.995833
-anchor_bottom = 0.992593
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+[node name="Avatar" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="MainPanel" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainPanel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.0168067
-anchor_top = 0.0777027
-anchor_right = 0.983193
-anchor_bottom = 0.935811
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -254.0
 grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
+grow_vertical = 0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="NameText" type="RichTextLabel" parent="Panel/VBoxContainer"]
+[node name="Panel" type="Panel" parent="MainPanel/MarginContainer"]
 layout_mode = 2
-theme = SubResource("Theme_gogt0")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/MarginContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameText" type="RichTextLabel" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 40
+theme_override_font_sizes/italics_font_size = 40
+theme_override_font_sizes/bold_italics_font_size = 40
+theme_override_font_sizes/mono_font_size = 40
+bbcode_enabled = true
 text = "Name"
 fit_content = true
 
-[node name="MessageText" type="RichTextLabel" parent="Panel/VBoxContainer"]
+[node name="MessageText" type="RichTextLabel" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme = SubResource("Theme_tw6ke")
-text = "Message text"
+bbcode_enabled = true
+text = "Message text is a text"
 fit_content = true
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+[node name="Choices" type="MarginContainer" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 4
 
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices"]
+layout_mode = 2
+
+[node name="Choice0" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "This is choice A"
+flat = true
+alignment = 0
+
+[node name="Choice1" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "This is choice B"
+flat = true
+alignment = 0
+
+[node name="Choice2" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "This is choice C"
+flat = true
+alignment = 0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice0" to="." method="_on_choice_0_pressed"]
+[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice1" to="." method="_on_choice_1_pressed"]
+[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice2" to="." method="_on_choice_2_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

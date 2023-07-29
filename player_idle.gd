@@ -9,8 +9,8 @@ func enter(_msg := {}) -> void:
 func physics_update(delta: float) -> void:
 	player.velocity.x = move_toward(player.velocity.x, 0, player.FRICTION * delta)
 	player.move_and_slide()
-	if Input.is_action_pressed("ui_down") \
-		and Input.is_action_just_pressed("jump") \
+	if InputScheme.is_action_pressed("down") \
+		and InputScheme.is_action_just_pressed("jump") \
 		and player.can_drop_down():
 		player.position.y += 1
 		player.move_and_slide()
@@ -21,24 +21,24 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("Air")
 		return
 		
-	if Input.is_action_pressed("jump"):
+	if InputScheme.is_action_pressed("jump"):
 		state_machine.transition_to("Air", { did_jump = true })
 		return
 	
-	if Input.is_action_just_pressed("attack"):
+	if InputScheme.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack")
 		return
 		
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = InputScheme.get_axis("left", "right")
 	if direction:
 		state_machine.transition_to("Run")
 		return
 	
-	if player.can_climb() and Input.is_action_pressed("ui_up"):
+	if player.can_climb() and InputScheme.is_action_pressed("up"):
 		state_machine.transition_to("Climb")
 		return
 		
-	if player.can_climb_down() and Input.is_action_pressed("ui_down"):
+	if player.can_climb_down() and InputScheme.is_action_pressed("down"):
 		player.will_climb_down()
 		state_machine.transition_to("Climb")
 		return

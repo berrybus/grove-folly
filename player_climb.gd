@@ -9,12 +9,12 @@ func enter(_msg := {}) -> void:
 	player.body_animation.offset.x = player.h_flip_offset
 	
 func physics_update(_delta: float) -> void:
-	if Input.is_action_just_pressed("jump"):
+	if InputScheme.is_action_just_pressed("jump"):
 		start_ladder_timeout()
 		state_machine.transition_to("Air", { did_jump = true })
 		return
 	
-	var direction = Input.get_axis("ui_up", "ui_down")
+	var direction = InputScheme.get_axis("up", "down")
 	var previous_velocity = player.velocity.y
 	player.velocity.y = direction * player.LADDER_SPEED
 	player.move_and_slide()
@@ -31,7 +31,7 @@ func physics_update(_delta: float) -> void:
 		state_machine.transition_to("Idle")
 		return
 		
-	if player.is_on_floor_only() and Input.is_action_pressed("ui_down"):
+	if player.is_on_floor_only() and InputScheme.is_action_pressed("down"):
 		start_ladder_timeout()
 		state_machine.transition_to("Idle")
 		return
