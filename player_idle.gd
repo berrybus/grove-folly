@@ -9,6 +9,11 @@ func enter(_msg := {}) -> void:
 func physics_update(delta: float) -> void:
 	player.velocity.x = move_toward(player.velocity.x, 0, player.FRICTION * delta)
 	player.move_and_slide()
+	
+	if InputScheme.is_action_just_pressed("attack"):
+		state_machine.transition_to("Attack")
+		return
+		
 	if InputScheme.is_action_pressed("down") \
 		and InputScheme.is_action_just_pressed("jump") \
 		and player.can_drop_down():
@@ -23,10 +28,6 @@ func physics_update(delta: float) -> void:
 		
 	if InputScheme.is_action_pressed("jump"):
 		state_machine.transition_to("Air", { did_jump = true })
-		return
-	
-	if InputScheme.is_action_just_pressed("attack"):
-		state_machine.transition_to("Attack")
 		return
 		
 	var direction = InputScheme.get_axis("left", "right")
