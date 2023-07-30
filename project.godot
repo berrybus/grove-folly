@@ -78,6 +78,7 @@ confirm={
 2d_physics/layer_4="Ladders"
 2d_physics/layer_5="Objects"
 2d_physics/layer_6="Enemies"
+2d_physics/layer_7="PlayerWeapon"
 
 [physics]
 

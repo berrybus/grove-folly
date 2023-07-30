@@ -27,11 +27,16 @@ var touching_objects: Array[InteractObject] = []
 @onready var state_machine = $StateMachine
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var ladder_timer: Timer = $LadderDetector/LadderTimer
+@onready var sword_collision: CollisionShape2D = $Sword/SwordCollision
+@onready var sword = $Sword
+@onready var color_rect = $Sword/ColorRect
 
 func _ready():
 	ladder_timer.stop()
+	sword_collision.disabled = true
 	
 func _physics_process(_delta):
+	# color_rect.visible = !sword_collision.disabled
 	if state_machine.state is PlayerAttack:
 		return
 		
@@ -116,7 +121,9 @@ func _on_object_detector_area_entered(area):
 	if area is InteractObject:
 		touching_objects.append(area)
 
-
 func _on_object_detector_area_exited(area):
 	if area is InteractObject:
 		touching_objects.erase(area)
+
+func facing_right() -> bool:
+	return body_animation.flip_h

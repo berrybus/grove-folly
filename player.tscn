@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=40 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
 [ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
@@ -14,6 +14,10 @@
 [ext_resource type="Script" path="res://player_air.gd" id="11_urbjs"]
 [ext_resource type="Script" path="res://player_attack.gd" id="12_lregl"]
 [ext_resource type="Script" path="res://player_climb.gd" id="14_x5521"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykprf"]
+radius = 42.5
+height = 146.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj7vp"]
 atlas = ExtResource("2_on1r0")
@@ -219,9 +223,28 @@ floor_max_angle = 0.872665
 floor_snap_length = 9.0
 script = ExtResource("1_d7r6m")
 
+[node name="Sword" type="Area2D" parent="."]
+position = Vector2(-92, 4)
+collision_layer = 64
+collision_mask = 32
+
+[node name="SwordCollision" type="CollisionShape2D" parent="Sword"]
+z_index = 3
+position = Vector2(8, -1)
+shape = SubResource("CapsuleShape2D_ykprf")
+
+[node name="ColorRect" type="ColorRect" parent="Sword"]
+visible = false
+offset_left = -32.0
+offset_top = -67.0
+offset_right = 51.0
+offset_bottom = 93.0
+color = Color(1, 0.160784, 0.101961, 1)
+
 [node name="BodyAnimation" type="AnimatedSprite2D" parent="."]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_adey2")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -234,8 +257,7 @@ position = Vector2(-4, 10)
 shape = SubResource("RectangleShape2D_2g01y")
 
 [node name="SwordSmear" type="AnimatedSprite2D" parent="."]
-z_index = -1
-position = Vector2(-76, -12)
+position = Vector2(-76, 0)
 sprite_frames = SubResource("SpriteFrames_k3en1")
 animation = &"attack"
 
