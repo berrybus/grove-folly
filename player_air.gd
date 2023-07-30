@@ -25,6 +25,7 @@ func physics_update(delta: float) -> void:
 	
 	if InputScheme.is_action_just_pressed("attack"):
 		state_machine.transition_to("Attack")
+		return
 
 	if player.is_on_floor():
 		if direction:

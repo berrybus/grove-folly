@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://1g2q5c0k2cxx"]
+[gd_scene load_steps=7 format=3 uid="uid://1g2q5c0k2cxx"]
 
 [ext_resource type="PackedScene" uid="uid://dbnf73li5keve" path="res://Environment/tile_map.tscn" id="1_6dvx2"]
 [ext_resource type="PackedScene" uid="uid://b7hvtcw2qbfgr" path="res://dialogue.tscn" id="1_j4d76"]
 [ext_resource type="PackedScene" uid="uid://b244bqcu8wea8" path="res://player.tscn" id="2_kjlvj"]
 [ext_resource type="PackedScene" uid="uid://b5jo7vvkbh3sv" path="res://Environment/platforms.tscn" id="2_sk2y2"]
 [ext_resource type="PackedScene" uid="uid://b6bnfn1cv1kb4" path="res://template_chan.tscn" id="2_td4u3"]
+[ext_resource type="PackedScene" uid="uid://bkth3qlrj78p6" path="res://snail.tscn" id="6_jmv1c"]
 
 [node name="World" type="Node2D"]
 
@@ -29,3 +30,12 @@ layer_0/tile_data = PackedInt32Array(589828, 458753, 8, 589829, 458753, 8, 58983
 layer_1/tile_data = PackedInt32Array(196620, 458753, 2, 262156, 458753, 2, 327692, 458753, 2, 393228, 458753, 2, 458764, 458753, 2, 524300, 458753, 2, 196624, 458753, 1, 262160, 458753, 2, 327696, 458753, 2, 393232, 458753, 2, 458768, 458753, 2, 196629, 458753, 1, 262165, 458753, 2, 327701, 458753, 2, 393237, 458753, 2, 458773, 458753, 2, 524309, 458753, 2, 589845, 458753, 2, 131073, 458753, 1, 196609, 458753, 2, 262145, 458753, 2, 327681, 458753, 2, -131052, 458753, 1, 20, 458753, 2, -65516, 458753, 2, 65556, 458753, 2, 131092, 458753, 2)
 
 [node name="Dialogue" parent="." instance=ExtResource("1_j4d76")]
+
+[node name="Snail" parent="." instance=ExtResource("6_jmv1c")]
+position = Vector2(304, 384)
+
+[node name="Snail2" parent="." instance=ExtResource("6_jmv1c")]
+position = Vector2(1072, -184)
+
+[node name="Snail3" parent="." instance=ExtResource("6_jmv1c")]
+position = Vector2(1020, 172)

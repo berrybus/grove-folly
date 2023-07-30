@@ -49,11 +49,15 @@ func next_line():
 	if not line_data:
 		end_dialogue()
 		return
-	var avatarTexture = load("res://Avatars/" + line_data["avatar"] + ".png")
+	var avatar_texture = null
+	if line_data.has("avatar"):
+		avatar_texture = load("res://Avatars/" + line_data["avatar"] + ".png")
+		avatar.texture = avatar_texture
+	else:
+		avatar.texture = null
 	name_text.text = line_data["name"]
 	message_text.text = line_data["message"]
 	message_text.visible_characters = 0
-	avatar.texture = avatarTexture
 	
 	if line_data.has("choices"):
 		var message_choices = line_data["choices"]

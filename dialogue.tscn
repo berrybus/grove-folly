@@ -27,7 +27,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -254.0
+offset_top = -356.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 3
@@ -83,7 +83,7 @@ layout_mode = 2
 [node name="Choice0" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 28
 text = "This is choice A"
 flat = true
 alignment = 0
@@ -91,7 +91,7 @@ alignment = 0
 [node name="Choice1" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 28
 text = "This is choice B"
 flat = true
 alignment = 0
@@ -99,7 +99,7 @@ alignment = 0
 [node name="Choice2" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 28
 text = "This is choice C"
 flat = true
 alignment = 0

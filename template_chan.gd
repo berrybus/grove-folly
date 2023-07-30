@@ -9,7 +9,7 @@ func show_dialogue() -> void:
 	Events.show_dialogue.emit(self)
 	
 func get_line_data():
-	if cur_idx >= data.size():
+	if data == null or cur_idx >= data.size():
 		return null
 	return data[cur_idx]
 

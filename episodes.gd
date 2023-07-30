@@ -42,3 +42,22 @@ static func getNames0():
 		"avatar": "fiana_temp",
 	 },
 ]
+
+static func getQuest0():
+	return [
+	{
+		"name": "Fiana",
+		"message": "Hey look you did it, nice!",
+		"avatar": "fiana_temp",
+	 },
+	{
+		"name": "Fiana",
+		"message": "Oh, the thing I asked you to do? I must have forgotten about it.",
+		"avatar": "fiana_temp",
+	 },
+		{
+		"name": "Fiana",
+		"message": "Weird, huh?",
+		"avatar": "fiana_temp",
+	 },
+	]

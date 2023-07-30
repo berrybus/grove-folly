@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkth3qlrj78p6"]
+
+[ext_resource type="Texture2D" uid="uid://cv4jp7tdnhbpu" path="res://Assets/snail_walk_1.png" id="1_7jv35"]
+[ext_resource type="Script" path="res://snail.gd" id="1_n04w7"]
+[ext_resource type="Texture2D" uid="uid://ckwdothhp0ej0" path="res://Assets/snail_walk_2.png" id="2_18qxl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mb2pr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7jv35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_18qxl")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bv5mu"]
+size = Vector2(108, 60)
+
+[node name="Snail" type="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 6
+floor_constant_speed = true
+floor_snap_length = 8.0
+script = ExtResource("1_n04w7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_mb2pr")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -2)
+shape = SubResource("RectangleShape2D_bv5mu")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

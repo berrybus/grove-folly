@@ -25,7 +25,7 @@ func physics_update(_delta: float) -> void:
 		state_machine.transition_to("Air")
 		return
 		
-	if InputScheme.is_action_just_pressed("jump"):
+	if InputScheme.is_action_pressed("jump"):
 		state_machine.transition_to("Air", {did_jump = true})
 		return
 	

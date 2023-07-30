@@ -77,6 +77,11 @@ confirm={
 2d_physics/layer_3="OneWay"
 2d_physics/layer_4="Ladders"
 2d_physics/layer_5="Objects"
+2d_physics/layer_6="Enemies"
+
+[physics]
+
+2d/default_gravity=4000.0
 
 [rendering]
 

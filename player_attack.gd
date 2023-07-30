@@ -19,7 +19,7 @@ func physics_update(delta: float) -> void:
 		if direction:
 			player.velocity.x = direction * player.SPEED
 		else:
-			player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+			player.velocity.x = move_toward(player.velocity.x, 0, player.AIR_FRICTION * delta)
 	player.velocity.y += player.gravity * delta
 	player.move_and_slide()
 
