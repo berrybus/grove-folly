@@ -9,8 +9,8 @@ func enter(msg := {}) -> void:
 	player.sword_smear.stop()
 	player.knockback_timer.start()
 	player.body_animation.play("hurt")
+	player.animation_player.play("invuln")
 	player.invuln_timer.start()
-	player.modulate = Color(Color.WHITE, 0.5)
 
 func physics_update(delta: float) -> void:
 	player.velocity.x = knockback_dir * 100

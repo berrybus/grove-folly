@@ -32,6 +32,7 @@ var touching_objects: Array[InteractObject] = []
 @onready var color_rect = $Sword/ColorRect
 @onready var knockback_timer = $KnockbackTimer
 @onready var invuln_timer = $InvulnTimer
+@onready var animation_player = $AnimationPlayer
 @onready var hitbox = $Hitbox
 var sword_particles = preload("res://sword_particles.tscn") 
 
@@ -137,6 +138,7 @@ func _on_sword_area_shape_entered(_area_rid, area, area_shape_index, local_shape
 ## Getting hit/Knockback ##
 
 func _on_invuln_timer_timeout():
+	animation_player.stop()
 	modulate = Color.WHITE
 
 func _on_knockback_timer_timeout():
