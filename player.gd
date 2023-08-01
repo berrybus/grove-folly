@@ -30,6 +30,15 @@ var touching_objects: Array[InteractObject] = []
 @onready var sword_collision: CollisionShape2D = $Sword/SwordCollision
 @onready var sword = $Sword
 @onready var color_rect = $Sword/ColorRect
+@onready var knockback_timer = $KnockbackTimer
+@onready var invuln_timer = $InvulnTimer
+@onready var hitbox = $Hitbox
+var sword_particles = preload("res://sword_particles.tscn") 
+
+# Saved from hitbox
+var other_area: Area2D
+var other_shape_index: int
+var hitbox_shape_index: int
 
 func _ready():
 	ladder_timer.stop()
@@ -37,6 +46,7 @@ func _ready():
 	
 func _physics_process(_delta):
 	# color_rect.visible = !sword_collision.disabled
+	check_enemy_collision()
 	if state_machine.state is PlayerAttack:
 		return
 		
@@ -80,7 +90,101 @@ func get_collision_offset() -> Vector2:
 	
 func can_drop_down() -> bool:
 	return one_way_map != null
+
+func _on_object_detector_area_entered(area):
+	if area is InteractObject:
+		touching_objects.append(area)
+
+func _on_object_detector_area_exited(area):
+	if area is InteractObject:
+		touching_objects.erase(area)
+
+func facing_right() -> bool:
+	return body_animation.flip_h
+
+## Attacking/Sword ##
+
+func _on_body_animation_animation_finished():
+	if body_animation.animation == "attack" and state_machine.state is PlayerAttack:
+		state_machine.state.attack_anim_finished()
+
+func _on_sword_area_shape_entered(_area_rid, area, area_shape_index, local_shape_index):
+	var other_shape_owner = area.shape_find_owner(area_shape_index)
+	var other_shape_node = area.shape_owner_get_owner(other_shape_owner)
+	var other_shape = area.shape_owner_get_shape(other_shape_owner, area_shape_index)
+	var shape_owner = sword.shape_find_owner(local_shape_index)
+	var shape_node = sword.shape_owner_get_owner(shape_owner)
+	var shape = sword.shape_owner_get_shape(shape_owner, local_shape_index)
 	
+	var points = shape.collide_and_get_contacts(
+		shape_node.get_global_transform(),
+		other_shape,
+		other_shape_node.get_global_transform()
+	)
+	
+	if points.size() < 2:
+		print("no size")
+		return
+		
+	var normal = (points[1] - points[0]).normalized()
+	
+	var particle = sword_particles.instantiate()
+	add_child(particle)
+	particle.emitting = true
+	particle.direction = normal
+	particle.global_position = points[0] + Vector2(0, -24)
+
+## Getting hit/Knockback ##
+
+func _on_invuln_timer_timeout():
+	modulate = Color.WHITE
+
+func _on_knockback_timer_timeout():
+	if state_machine.state is PlayerHurt:
+		state_machine.state.stop_knockback()
+
+func check_enemy_collision():
+	if invuln_timer.time_left > 0:
+		return
+		
+	if not other_area:
+		return
+		
+	var other_shape_owner = other_area.shape_find_owner(other_shape_index)
+	var other_shape_node = other_area.shape_owner_get_owner(other_shape_owner)
+	var other_shape = other_area.shape_owner_get_shape(other_shape_owner, other_shape_index)
+	var shape_owner = hitbox.shape_find_owner(hitbox_shape_index)
+	var shape_node = hitbox.shape_owner_get_owner(shape_owner)
+	var shape = hitbox.shape_owner_get_shape(shape_owner, hitbox_shape_index)
+
+	var points = shape.collide_and_get_contacts(
+		shape_node.get_global_transform(),
+		other_shape,
+		other_shape_node.get_global_transform()
+	)
+	
+	if points.size() < 2:
+		return
+	
+	var normal = (points[1] - points[0]).normalized()
+	if normal.x > 0:
+		state_machine.transition_to("Hurt", { "knockback_dir": 1 })
+	else:
+		state_machine.transition_to("Hurt", { "knockback_dir": -1 })
+	
+func _on_hitbox_area_shape_entered(_area_rid, area, area_shape_index, local_shape_index):
+	other_area = area
+	other_shape_index = area_shape_index
+	hitbox_shape_index = local_shape_index
+
+func _on_hitbox_area_shape_exited(area_rid, area, area_shape_index, local_shape_index):
+	if area == other_area:
+		other_area = null
+		other_shape_index = 0
+		hitbox_shape_index = 0
+		
+## Ladders ##
+
 func can_climb() -> bool:
 	return ladder_map != null and can_enter_ladder
 	
@@ -95,11 +199,7 @@ func will_climb_down():
 	_on_ladder_detector_body_shape_entered(ladder_rid_below, ladder_map_below, 0, 0)
 	# this assumes that the ladder detector area has the same bottom as the player collision
 	position.y += 1
-
-func _on_body_animation_animation_finished():
-	if body_animation.animation == "attack" and state_machine.state is PlayerAttack:
-		state_machine.state.attack_anim_finished()
-
+	
 func _on_ladder_detector_body_entered(body):
 	ladder_map = body
 
@@ -116,14 +216,3 @@ func _on_ladder_detector_body_shape_exited(body_rid, body, _body_shape_index, _l
 
 func _on_ladder_timer_timeout():
 	can_enter_ladder = true
-
-func _on_object_detector_area_entered(area):
-	if area is InteractObject:
-		touching_objects.append(area)
-
-func _on_object_detector_area_exited(area):
-	if area is InteractObject:
-		touching_objects.erase(area)
-
-func facing_right() -> bool:
-	return body_animation.flip_h

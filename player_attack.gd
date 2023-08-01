@@ -20,6 +20,8 @@ func enter(_msg := {}) -> void:
 func physics_update(delta: float) -> void:
 	if delay >= DELAY_FRAMES:
 		player.sword_collision.disabled = false
+		player.invuln_timer.stop()
+		player.modulate = Color.WHITE
 	else:
 		delay += 1
 		

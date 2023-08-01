@@ -7,7 +7,7 @@ func show_dialogue() -> void:
 func get_line_data():
 	return {}
 
-func update_line_data(choice) -> void:
+func update_line_data(_choice) -> void:
 	pass
 
 func default_update(data, cur_idx, choice) -> int:

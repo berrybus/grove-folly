@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b4d22lpl5d7tg"]
+
+[node name="Choice0" type="Button"]
+theme_override_font_sizes/font_size = 28
+text = "This is choice A"
+flat = true
+alignment = 0

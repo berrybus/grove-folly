@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7hvtcw2qbfgr"]
+[gd_scene load_steps=4 format=3 uid="uid://b7hvtcw2qbfgr"]
 
 [ext_resource type="Script" path="res://dialogue.gd" id="1_gohnn"]
+[ext_resource type="PackedScene" uid="uid://b4d22lpl5d7tg" path="res://dialogue_choice.tscn" id="2_81oyh"]
 
 [sub_resource type="Theme" id="Theme_tw6ke"]
 default_font_size = 32
@@ -77,37 +78,14 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/margin_top = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices"]
-layout_mode = 2
-
-[node name="Choice0" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
+[node name="ChoicesContainer" type="VBoxContainer" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "This is choice A"
-flat = true
-alignment = 0
 
-[node name="Choice1" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
-unique_name_in_owner = true
+[node name="Choice0" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/ChoicesContainer" instance=ExtResource("2_81oyh")]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "This is choice B"
-flat = true
-alignment = 0
-
-[node name="Choice2" type="Button" parent="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "This is choice C"
-flat = true
-alignment = 0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.05
 
-[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice0" to="." method="_on_choice_0_pressed"]
-[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice1" to="." method="_on_choice_1_pressed"]
-[connection signal="pressed" from="MainPanel/MarginContainer/MarginContainer/VBoxContainer/Choices/VBoxContainer/Choice2" to="." method="_on_choice_2_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfv37hyolpe5r"]
+
+[ext_resource type="Script" path="res://sword_particles.gd" id="1_mmsil"]
+
+[node name="SwordParticles" type="CPUParticles2D"]
+z_index = 1
+emitting = false
+amount = 40
+lifetime = 0.3
+one_shot = true
+speed_scale = 0.8
+explosiveness = 1.0
+randomness = 0.7
+lifetime_randomness = 0.7
+direction = Vector2(-1, 0)
+spread = 90.0
+initial_velocity_max = 180.0
+angle_min = -45.0
+angle_max = 45.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+script = ExtResource("1_mmsil")

@@ -1,5 +1,7 @@
 class_name Episodes
 
+var quests = {}
+
 static func getNames0():
 	return [
 	{

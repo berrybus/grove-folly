@@ -13,6 +13,7 @@ static var key_map = {
 			"down",
 			"jump",
 			"attack",
+			"cast",
 			"interact"
 		],
 		Scheme.UI: [

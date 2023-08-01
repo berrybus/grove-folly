@@ -60,7 +60,12 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="FollowTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="timeout" from="ChangeDirectionTimer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="FollowTimer" to="." method="_on_follow_timer_timeout"]
