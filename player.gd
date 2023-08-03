@@ -34,8 +34,7 @@ var touching_objects: Array[InteractObject] = []
 @onready var invuln_timer = $InvulnTimer
 @onready var animation_player = $AnimationPlayer
 @onready var hitbox = $Hitbox
-var sword_particles = preload("res://sword_particles.tscn")
-var energy_ball = preload("res://energy_ball.tscn")
+var sword_particles = preload("res://weapon_particles.tscn")
 
 # Saved from hitbox
 var other_area: Area2D
@@ -52,15 +51,6 @@ func _physics_process(_delta):
 	if state_machine.state is PlayerAttack:
 		return
 	
-	if InputScheme.is_action_just_pressed("cast"):
-		var spell = energy_ball.instantiate()
-		get_owner().add_child(spell)
-		spell.global_position = global_position
-		if body_animation.flip_h:
-			spell.dir = 1
-		else:
-			spell.dir = -1
-		
 	apply_flip()
 	var space_state = get_world_2d().direct_space_state
 	var xpos = collision_shape_2d.global_position.x
@@ -82,7 +72,7 @@ func _physics_process(_delta):
 	if InputScheme.is_action_just_pressed("interact") and len(touching_objects) > 0:
 		touching_objects.front().show_dialogue()
 		
-	
+		
 func apply_flip():
 	if state_machine.state is PlayerClimb:
 		return
@@ -117,7 +107,8 @@ func facing_right() -> bool:
 ## Attacking/Sword ##
 
 func _on_body_animation_animation_finished():
-	if body_animation.animation == "attack" and state_machine.state is PlayerAttack:
+	if (body_animation.animation == "cast" or body_animation.animation == "attack") \
+		and state_machine.state is PlayerAttack:
 		state_machine.state.attack_anim_finished()
 
 func _on_sword_area_shape_entered(_area_rid, area, area_shape_index, local_shape_index):

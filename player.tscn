@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://b244bqcu8wea8"]
+[gd_scene load_steps=49 format=3 uid="uid://b244bqcu8wea8"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_d7r6m"]
 [ext_resource type="Texture2D" uid="uid://1g6mxhj4x1ld" path="res://Assets/pywari_fall.png" id="2_cm8kf"]
@@ -30,6 +30,18 @@ atlas = ExtResource("2_on1r0")
 region = Rect2(112, 0, 112, 174)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mycs7"]
+atlas = ExtResource("2_on1r0")
+region = Rect2(224, 0, 112, 174)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56rby"]
+atlas = ExtResource("2_on1r0")
+region = Rect2(0, 0, 112, 174)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omxhl"]
+atlas = ExtResource("2_on1r0")
+region = Rect2(112, 0, 112, 174)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxko4"]
 atlas = ExtResource("2_on1r0")
 region = Rect2(224, 0, 112, 174)
 
@@ -104,6 +116,20 @@ animations = [{
 "loop": false,
 "name": &"attack",
 "speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_56rby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omxhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxko4")
+}],
+"loop": false,
+"name": &"cast",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -296,8 +322,10 @@ color = Color(1, 0.160784, 0.101961, 1)
 [node name="BodyAnimation" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_adey2")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
+frame = 2
+frame_progress = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

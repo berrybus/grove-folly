@@ -10,6 +10,10 @@ func physics_update(_delta: float) -> void:
 		state_machine.transition_to("Attack")
 		return
 		
+	if InputScheme.is_action_just_pressed("cast"):
+		state_machine.transition_to("Attack", { "cast" = true })
+		return
+		
 	var direction = InputScheme.get_axis("left", "right")
 	if direction:
 		player.velocity.x = player.SPEED * direction

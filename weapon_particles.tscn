@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bfv37hyolpe5r"]
 
-[ext_resource type="Script" path="res://sword_particles.gd" id="1_mmsil"]
+[ext_resource type="Script" path="res://weapon_particles.gd" id="1_wd1ia"]
 
-[node name="SwordParticles" type="CPUParticles2D"]
+[node name="WeaponParticles" type="CPUParticles2D"]
 z_index = 1
 emitting = false
 amount = 40
@@ -22,4 +22,4 @@ scale_amount_min = 2.0
 scale_amount_max = 4.0
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("1_mmsil")
+script = ExtResource("1_wd1ia")

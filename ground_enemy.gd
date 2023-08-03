@@ -130,33 +130,42 @@ func _on_timer_timeout():
 func get_collision_size() -> Vector2:
 	return collision_shape_2d.shape.get_rect().size
 
-func take_damage():
-	var dmg_taken = rng.randi_range(1, 4)
+func take_damage(weapon):
+	var dmg_taken: int
+	if weapon is EnergyShot:
+		dmg_taken = rng.randi_range(1, 2)
+	else:
+		dmg_taken = rng.randi_range(3, 5)
 	health -= dmg_taken
 	# Enemy dead!
 	if health <= 0:
 		var particles = death_particles.instantiate()
-		get_owner().add_child(particles)
+		get_parent().add_child(particles)
 		particles.global_position = global_position
 		particles.emitting = true
 		queue_free()
 	var text = damage_text.instantiate()
 	text.dmg = dmg_taken
-	var world = get_owner()
+	var world = get_parent()
 	world.add_child(text)
 	text.global_position = global_position + Vector2(0, -get_collision_size().y)
 	
 func _on_hitbox_area_entered(area):
 	if cur_state == State.KNOCKBACK:
 		return
-	take_damage()
-	player = area.get_owner()
-	if not (player is Player):
-		return
-	if player.facing_right():
-		direction = 1
+	take_damage(area)
+	if area.get_owner() is Player:
+		player = area.get_owner()
 	else:
-		direction = -1
+		player = area.player
+		
+	if player and player is Player:
+		if player.facing_right():
+			direction = 1
+		else:
+			direction = -1
+	elif area is EnergyShot:
+		direction = area.dir
 	animated_sprite_2d.pause()
 	cur_state = State.KNOCKBACK
 	velocity.y = KNOCKBACK_JUMP

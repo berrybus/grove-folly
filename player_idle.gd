@@ -14,6 +14,10 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("Attack")
 		return
 		
+	if InputScheme.is_action_just_pressed("cast"):
+		state_machine.transition_to("Attack", { "cast" = true })
+		return
+		
 	if InputScheme.is_action_pressed("down") \
 		and InputScheme.is_action_just_pressed("jump") \
 		and player.can_drop_down():
