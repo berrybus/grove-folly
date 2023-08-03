@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://ba3cpv6k81jtx"]
+
+[ext_resource type="Script" path="res://energy_ball.gd" id="1_uci7v"]
+[ext_resource type="Texture2D" uid="uid://d2yw5l8fhldby" path="res://spell.png" id="1_upuqs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkce1"]
+atlas = ExtResource("1_upuqs")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7p3r"]
+atlas = ExtResource("1_upuqs")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tu7nq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkce1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7p3r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_avvdh"]
+radius = 16.0
+
+[node name="EnergyBall" type="Area2D"]
+script = ExtResource("1_uci7v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tu7nq")
+autoplay = "default"
+frame = 1
+frame_progress = 0.138409
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_avvdh")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

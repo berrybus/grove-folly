@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://51d5yvbhtius"]
+
+[ext_resource type="Script" path="res://damage_text.gd" id="1_ucn0p"]
+
+[sub_resource type="SystemFont" id="SystemFont_4k0xg"]
+subpixel_positioning = 0
+
+[sub_resource type="FontVariation" id="FontVariation_c64or"]
+base_font = SubResource("SystemFont_4k0xg")
+variation_embolden = 1.0
+spacing_glyph = 4
+
+[node name="DamageText" type="Node2D"]
+position = Vector2(180, 40)
+script = ExtResource("1_ucn0p")
+
+[node name="Outline" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_outline_size = 24
+theme_override_fonts/font = SubResource("FontVariation_c64or")
+theme_override_font_sizes/font_size = 60
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Damage" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.94902, 0.811765, 0.0196078, 1)
+theme_override_fonts/font = SubResource("FontVariation_c64or")
+theme_override_font_sizes/font_size = 60
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

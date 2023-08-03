@@ -1,9 +1,12 @@
+class_name GroundEnemy
 extends CharacterBody2D
 
-const SPEED = 100.0
-const KNOCKBACK_SPEED = 200
-const KNOCKBACK_JUMP = -200
+@export var SPEED = 100.0
+@export var KNOCKBACK_SPEED = 200
+@export var KNOCKBACK_JUMP = -200
 const STUN_FRICTION = 800
+
+@export var health: int
 
 enum State {
 	KNOCKBACK,
@@ -19,6 +22,9 @@ enum State {
 @onready var knockback_timer = $KnockbackTimer
 @onready var stun_timer = $StunTimer
 @onready var follow_timer = $FollowTimer
+
+var damage_text = preload("res://damage_text.tscn") 
+var death_particles = preload("res://death_particles.tscn") 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -124,9 +130,26 @@ func _on_timer_timeout():
 func get_collision_size() -> Vector2:
 	return collision_shape_2d.shape.get_rect().size
 
+func take_damage():
+	var dmg_taken = rng.randi_range(1, 4)
+	health -= dmg_taken
+	# Enemy dead!
+	if health <= 0:
+		var particles = death_particles.instantiate()
+		get_owner().add_child(particles)
+		particles.global_position = global_position
+		particles.emitting = true
+		queue_free()
+	var text = damage_text.instantiate()
+	text.dmg = dmg_taken
+	var world = get_owner()
+	world.add_child(text)
+	text.global_position = global_position + Vector2(0, -get_collision_size().y)
+	
 func _on_hitbox_area_entered(area):
 	if cur_state == State.KNOCKBACK:
 		return
+	take_damage()
 	player = area.get_owner()
 	if not (player is Player):
 		return
@@ -138,7 +161,7 @@ func _on_hitbox_area_entered(area):
 	cur_state = State.KNOCKBACK
 	velocity.y = KNOCKBACK_JUMP
 	knockback_timer.start()
-	modulate = Color.INDIAN_RED
+	modulate = Color(0.974, 0.5, 0.492)
 
 func _on_knockback_timer_timeout():
 	cur_state = State.STUN
