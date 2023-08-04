@@ -92,7 +92,8 @@ func check_empty_space(dir_mult):
 	var space_state = get_world_2d().direct_space_state
 	var xpos_right = collision_shape_2d.global_position.x + get_collision_size().x / 2 + 1
 	var ypos_start = collision_shape_2d.global_position.y
-	var ypos = ypos_start + get_collision_size().y / 2 + 1
+	# half of tilesize + 1
+	var ypos = ypos_start + get_collision_size().y / 2 + 36
 	var right_query = PhysicsRayQueryParameters2D.create(Vector2(xpos_right, ypos_start), Vector2(xpos_right, ypos))
 	var right_result = space_state.intersect_ray(right_query)
 	if not right_result and direction == 1:
@@ -133,7 +134,7 @@ func get_collision_size() -> Vector2:
 func take_damage(weapon):
 	var dmg_taken: int
 	if weapon is EnergyShot:
-		dmg_taken = rng.randi_range(1, 2)
+		dmg_taken = rng.randi_range(2, 4)
 	else:
 		dmg_taken = rng.randi_range(3, 5)
 	health -= dmg_taken

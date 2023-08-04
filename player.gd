@@ -54,14 +54,16 @@ func _physics_process(_delta):
 	apply_flip()
 	var space_state = get_world_2d().direct_space_state
 	var xpos = collision_shape_2d.global_position.x
-	var ypos = collision_shape_2d.global_position.y + get_collision_size().y / 2 + 1
+	# half of tile size + 1
+	var ypos = collision_shape_2d.global_position.y + get_collision_size().y / 2 + 36
 	var query = PhysicsRayQueryParameters2D.create(collision_shape_2d.global_position, Vector2(xpos, ypos), ONE_WAY_MASK)
 	var result = space_state.intersect_ray(query)
 	if result and result["collider"] is TileMap:
 		one_way_map = result["collider"]
 	else:
 		one_way_map = null
-	query = PhysicsRayQueryParameters2D.create(Vector2(xpos, ypos - 1), Vector2(xpos, ypos), LADDER_MASK)
+	var ground_ypos = collision_shape_2d.global_position.y + get_collision_size().y / 2
+	query = PhysicsRayQueryParameters2D.create(Vector2(xpos, ground_ypos), Vector2(xpos, ground_ypos + 1), LADDER_MASK)
 	result = space_state.intersect_ray(query)
 	if result and result["collider"] is TileMap and result["rid"] is RID:
 		ladder_map_below = result["collider"]

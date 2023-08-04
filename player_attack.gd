@@ -43,18 +43,18 @@ func use_sword():
 	delay = 0
 	
 func cast_spell():
-	player.body_animation.play("cast")
+	player.body_animation.play("attack")
 	var spell = energy_shot.instantiate() as EnergyShot
 	spell.player = player
 	player.get_owner().add_child(spell)
 	spell.global_position = player.global_position + Vector2(0, 24)
 	if player.facing_right():
 		spell.dir = 1
-		spell.position.x += 96
+		spell.position.x += 72
 	else:
 		spell.dir = -1
 		spell.animated_sprite_2d.flip_h = true
-		spell.position.x -= 96
+		spell.position.x -= 72
 	delay = DELAY_FRAMES + 1
 	
 func attack_anim_finished():
