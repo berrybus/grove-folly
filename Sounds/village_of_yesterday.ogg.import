@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/village_of_yesterday.ogg-5ff97f2689b92df2c23b
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0
