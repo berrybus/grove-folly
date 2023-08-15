@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://de7m0lq4wa1i1"]
+
+[ext_resource type="Script" path="res://anawen.gd" id="1_mrg5o"]
+[ext_resource type="Texture2D" uid="uid://bb4mg0qa8th0i" path="res://Assets/anawen_sprite.png" id="2_40gr4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5qkm"]
+size = Vector2(152, 172)
+
+[node name="Anawen" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_mrg5o")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_40gr4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_w5qkm")

@@ -34,6 +34,7 @@ var touching_objects: Array[InteractObject] = []
 @onready var invuln_timer = $InvulnTimer
 @onready var animation_player = $AnimationPlayer
 @onready var hitbox = $Hitbox
+@onready var camera_2d = $Camera2D
 var sword_particles = preload("res://weapon_particles.tscn")
 
 # Saved from hitbox
@@ -54,8 +55,7 @@ func _physics_process(_delta):
 	apply_flip()
 	var space_state = get_world_2d().direct_space_state
 	var xpos = collision_shape_2d.global_position.x
-	# half of tile size + 1
-	var ypos = collision_shape_2d.global_position.y + get_collision_size().y / 2 + 36
+	var ypos = collision_shape_2d.global_position.y + get_collision_size().y / 2 + 1
 	var query = PhysicsRayQueryParameters2D.create(collision_shape_2d.global_position, Vector2(xpos, ypos), ONE_WAY_MASK)
 	var result = space_state.intersect_ray(query)
 	if result and result["collider"] is TileMap:
@@ -158,7 +158,9 @@ func check_enemy_collision():
 		
 	if not other_area:
 		return
-		
+	
+	Events.player_hit.emit()
+	
 	var other_shape_owner = other_area.shape_find_owner(other_shape_index)
 	var other_shape_node = other_area.shape_owner_get_owner(other_shape_owner)
 	var other_shape = other_area.shape_owner_get_shape(other_shape_owner, other_shape_index)

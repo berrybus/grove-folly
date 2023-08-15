@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://b57kukvp0lju"]
+
+[ext_resource type="Script" path="res://ground_enemy.gd" id="1_sq7ha"]
+[ext_resource type="Texture2D" uid="uid://g7b0fmjl8cjb" path="res://Assets/slimeWalk1.png" id="2_826ep"]
+[ext_resource type="Texture2D" uid="uid://dhfaj1eugaf5i" path="res://Assets/slimeWalk2.png" id="3_48hni"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mb2pr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_826ep")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_48hni")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bv5mu"]
+size = Vector2(108, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0w5x"]
+size = Vector2(100, 56)
+
+[node name="Slime" type="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 6
+floor_constant_speed = true
+floor_snap_length = 8.0
+script = ExtResource("1_sq7ha")
+SPEED = 200.0
+health = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_mb2pr")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.457172
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -2)
+shape = SubResource("RectangleShape2D_bv5mu")
+
+[node name="ChangeDirectionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_l0w5x")
+
+[node name="KnockbackTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="StunTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="FollowTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="ChangeDirectionTimer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="FollowTimer" to="." method="_on_follow_timer_timeout"]

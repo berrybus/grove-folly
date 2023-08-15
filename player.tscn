@@ -227,7 +227,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2g01y"]
-size = Vector2(36, 148)
+size = Vector2(56, 148)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sgm84"]
 atlas = ExtResource("7_in0yh")
@@ -269,7 +269,7 @@ size = Vector2(32, 89)
 [node name="Player" type="CharacterBody2D"]
 z_index = 1
 position = Vector2(528, 456)
-collision_mask = 6
+collision_mask = 134
 floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 9.0

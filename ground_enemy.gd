@@ -133,6 +133,7 @@ func get_collision_size() -> Vector2:
 
 func take_damage(weapon):
 	var dmg_taken: int
+	SoundManager.play_hit()
 	if weapon is EnergyShot:
 		dmg_taken = rng.randi_range(2, 4)
 	else:
@@ -140,10 +141,17 @@ func take_damage(weapon):
 	health -= dmg_taken
 	# Enemy dead!
 	if health <= 0:
+		SoundManager.play_enemy_die()
 		var particles = death_particles.instantiate()
 		get_parent().add_child(particles)
 		particles.global_position = global_position
 		particles.emitting = true
+		if name.contains("Snail"):
+			print("killed snail")
+			Globals.snails_killed += 1
+		elif name.contains("Slime"):
+			print("killed slime")
+			Globals.slimes_killed += 1
 		queue_free()
 	var text = damage_text.instantiate()
 	text.dmg = dmg_taken

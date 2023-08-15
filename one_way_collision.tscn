@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bna3062o0hwn5"]
+
+[ext_resource type="Texture2D" uid="uid://b0wpor03r14ir" path="res://Assets/side_oneway.png" id="1_0tq0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ncpme"]
+size = Vector2(70, 70)
+
+[node name="OneWayCollision" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0tq0h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 4.71239
+shape = SubResource("RectangleShape2D_ncpme")
+one_way_collision = true

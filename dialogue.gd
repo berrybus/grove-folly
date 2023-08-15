@@ -17,12 +17,11 @@ func _ready():
 	avatar.visible = false
 	for choice in choices_container.get_children():
 		choice.queue_free()
-	Events.show_dialogue.connect(on_show_dialogue)
 
 func _process(_delta):
 	if data_provider == null:
 		return
-	if InputScheme.is_action_just_pressed("confirm"):
+	if InputScheme.is_action_just_pressed("confirm") and message_text.visible_ratio > 0:
 		if message_text.visible_ratio == 1.0:
 			if not next_choices and not is_choosing():
 				data_provider.update_line_data(-1)
@@ -30,7 +29,7 @@ func _process(_delta):
 		elif message_text.visible_ratio < 1.0:
 			message_text.visible_characters = -1
 	
-func on_show_dialogue(provider):
+func show_dialogue(provider):
 	if data_provider:
 		return
 	InputScheme.use_ui()

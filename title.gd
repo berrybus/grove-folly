@@ -10,7 +10,7 @@ func _ready():
 	start.grab_focus()
 
 func _on_start_pressed():
-	get_tree().change_scene_to_packed(village)
+	SceneManager.goto(village, "")
 
 func _on_quit_pressed():
 	get_tree().quit()

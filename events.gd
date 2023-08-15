@@ -1,3 +1,4 @@
 extends Node
 
-signal show_dialogue(provider)
+signal player_hit
+signal change_scene(name: String)

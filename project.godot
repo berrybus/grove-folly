@@ -17,13 +17,16 @@ config/icon="res://icon.svg"
 
 [audio]
 
+buses/default_bus_layout="res://Sounds/default_audio_bus.tres"
 driver/mix_rate=48000
 
 [autoload]
 
 Events="*res://events.tscn"
 Globals="*res://globals.gd"
-SoundManager="*res://sound_manager.gd"
+Dialogue="*res://dialogue.tscn"
+SceneManager="*res://scene_manager.tscn"
+SoundManager="*res://sound_manager.tscn"
 
 [display]
 
@@ -90,6 +93,7 @@ cast={
 2d_physics/layer_5="Objects"
 2d_physics/layer_6="Enemies"
 2d_physics/layer_7="PlayerWeapon"
+2d_physics/layer_8="Doors"
 
 [physics]
 

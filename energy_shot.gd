@@ -18,6 +18,7 @@ func _physics_process(delta):
 
 func _on_timer_timeout():
 	play_uniform_explosion()
+	SoundManager.play_hit()
 	queue_free()
 
 func _on_animated_sprite_2d_animation_finished():
@@ -65,6 +66,7 @@ func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index)
 	if not body is TileMap:
 		return
 	play_uniform_explosion()
+	SoundManager.play_hit()
 	queue_free()
 
 func play_uniform_explosion():

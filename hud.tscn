@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://deccycila5inq"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_mp75j"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_mp75j")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = -1
+anchor_left = 0.00416667
+anchor_top = 0.00740741
+anchor_right = 0.106417
+anchor_bottom = 0.074037
+offset_right = -0.320004
+offset_bottom = 0.0400009
+metadata/_edit_use_anchors_ = true
+
+[node name="HP" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "HP: 5/5"
+horizontal_alignment = 1
